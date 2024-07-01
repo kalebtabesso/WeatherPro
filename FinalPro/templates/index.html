@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Forecast</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/static/background.jpg'); 
+            background-size: cover;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        h2 {
+            color: #ffcc00;
+        }
+        form {
+            margin: 20px 0;
+        }
+        input[type="text"] {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #ffcc00;
+            color: #000;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ffa500;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 15px;
+        }
+        th {
+            background-color: #ffcc00;
+            color: #000;
+        }
+        tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        tr:hover {
+            background-color: rgba(41, 5, 5, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Enter Latitude and Longitude</h2>
+        <form method="POST">
+            <label for="latitude">Latitude:</label><br>
+            <input type="text" id="latitude" name="latitude" required><br><br>
+            <label for="longitude">Longitude:</label><br>
+            <input type="text" id="longitude" name="longitude" required><br><br>
+            <button type="submit">Get Weather</button>
+        </form>
+
+        {% if error %}
+            <p style="color:red;">{{ error }}</p>
+        {% endif %}
+
+        {% if weather_data %}
+            <h2>Weather Forecast</h2>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Start Time</th>
+                    <th>Temperature</th>
+                    <th>Forecast</th>
+                </tr>
+                {% for period in weather_data %}
+                <tr>
+                    <td>{{ period['name'] }}</td>
+                    <td>{{ period['startTime'] }}</td>
+                    <td>{{ period['temperature'] }} {{ period['temperatureUnit'] }}</td>
+                    <td>{{ period['shortForecast'] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </div>
+</body>
+</html>
